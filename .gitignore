@@ -137,4 +137,3 @@ __pycache__/
 
 # C extensions
 *.so
-python/loyjoy-question-answering/xquad_de.json
