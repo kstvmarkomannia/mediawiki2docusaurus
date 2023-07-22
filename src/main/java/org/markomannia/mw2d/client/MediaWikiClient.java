@@ -21,7 +21,7 @@ import org.markomannia.mw2d.document.util.DocumentUtils;
 
 public class MediaWikiClient {
 
-	private static final String _BASE_URL = "https://www.markomannenwiki.de";
+	private static final String _BASE_URL = "https://old.markomannenwiki.de";
 
 	private static final String ALL_CATEGORIES_URL = _BASE_URL + "/index.php?title=Spezial:Kategorien";
 
