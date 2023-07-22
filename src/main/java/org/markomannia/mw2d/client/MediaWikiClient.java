@@ -33,12 +33,16 @@ public class MediaWikiClient {
 		final HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(url))
 				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + BASIC_AUTH).build();
 
-		final HttpResponse<byte[]> response = HttpClientUtils.sendOrRetry(httpRequest, BodyHandlers.ofByteArray());
+		try {
+			final HttpResponse<byte[]> response = HttpClientUtils.sendOrRetry(httpRequest, BodyHandlers.ofByteArray());
 
-		if (response.statusCode() < 200 || response.statusCode() >= 300) {
-			throw new RuntimeException();
-		} else {
-			return response.body();
+			if (response.statusCode() < 200 || response.statusCode() >= 300) {
+				return null;
+			} else {
+				return response.body();
+			}
+		} catch (final IOException e) {
+			return null;
 		}
 	}
 

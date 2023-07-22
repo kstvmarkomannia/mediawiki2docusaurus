@@ -52,9 +52,13 @@ public class ArticleWriter {
 
 			if (!assetFilePath.toFile().exists()) {
 				final byte[] assetBytes = MediaWikiClient.getAsset(assetAbsUrl);
-				System.out.println("Writing asset " + assetFilePath);
 
-				Files.write(assetFilePath, assetBytes);
+				if (assetBytes == null) {
+				} else {
+					System.out.println("Writing asset " + assetFilePath);
+
+					Files.write(assetFilePath, assetBytes);
+				}
 			}
 		}
 
