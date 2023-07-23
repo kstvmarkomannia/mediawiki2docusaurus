@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
@@ -16,6 +17,7 @@ import org.markomannia.mw2d.articles.ArticleRecord;
 import org.markomannia.mw2d.articles.ArticleWriter;
 import org.markomannia.mw2d.assets.AssetRecord;
 import org.markomannia.mw2d.assets.util.AssetUtils;
+import org.markomannia.mw2d.categories.CategoryWriter;
 import org.markomannia.mw2d.categories.util.CategoryUtils;
 import org.markomannia.mw2d.client.MediaWikiCategoryRecord;
 import org.markomannia.mw2d.client.MediaWikiClient;
@@ -66,6 +68,13 @@ public class Main {
 			articles.add(article);
 
 			ArticleWriter.writeArticle(article);
+		}
+
+		final Set<MediaWikiCategoryRecord> categoriesUsed = articles.stream().map(ArticleRecord::fromCategory)
+				.collect(Collectors.toSet());
+
+		for (final MediaWikiCategoryRecord category : categoriesUsed) {
+			CategoryWriter.writeCategory(category);
 		}
 
 		for (final ArticleRecord article : articles) {
