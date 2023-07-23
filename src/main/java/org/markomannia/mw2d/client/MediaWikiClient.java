@@ -7,7 +7,6 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,23 +14,20 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.markomannia.mw2d.Config;
 import org.markomannia.mw2d.categories.util.CategoryUtils;
 import org.markomannia.mw2d.client.util.HttpClientUtils;
 import org.markomannia.mw2d.document.util.DocumentUtils;
 
 public class MediaWikiClient {
 
-	private static final String _BASE_URL = "https://old.markomannenwiki.de";
+	private static final String ALL_CATEGORIES_URL = Config.MEDIAWIKI_URL + "/index.php?title=Spezial:Kategorien";
 
-	private static final String ALL_CATEGORIES_URL = _BASE_URL + "/index.php?title=Spezial:Kategorien";
-
-	private static final String ALL_PAGES_START_URL = _BASE_URL + "/index.php?title=Spezial:Alle_Seiten";
-
-	private static final String BASIC_AUTH = Base64.getEncoder().encodeToString("".getBytes());
+	private static final String ALL_PAGES_START_URL = Config.MEDIAWIKI_URL + "/index.php?title=Spezial:Alle_Seiten";
 
 	public static byte[] getAsset(final String url) throws IOException, InterruptedException {
 		final HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(url))
-				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + BASIC_AUTH).build();
+				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + Config.OPTIONAL_AUTH).build();
 
 		try {
 			final HttpResponse<byte[]> response = HttpClientUtils.sendOrRetry(httpRequest, BodyHandlers.ofByteArray());
@@ -55,7 +51,7 @@ public class MediaWikiClient {
 		System.out.println("Fetching " + url);
 
 		final HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(url))
-				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + BASIC_AUTH).build();
+				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + Config.OPTIONAL_AUTH).build();
 
 		final HttpResponse<String> response = HttpClientUtils.sendOrRetry(httpRequest, BodyHandlers.ofString());
 
@@ -65,7 +61,7 @@ public class MediaWikiClient {
 			throw new RuntimeException();
 		} else {
 			final String body = response.body();
-			final Document document = Jsoup.parse(body, _BASE_URL);
+			final Document document = Jsoup.parse(body, Config.MEDIAWIKI_URL);
 
 			document.select("ul > li").forEach(li -> {
 				final Element href = DocumentUtils.getFirst(li.select("> a[href]"));
@@ -98,7 +94,7 @@ public class MediaWikiClient {
 
 	public static String getHtml(final String url) throws IOException, InterruptedException {
 		final HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(url))
-				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + BASIC_AUTH).build();
+				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + Config.OPTIONAL_AUTH).build();
 
 		final HttpResponse<String> response = HttpClientUtils.sendOrRetry(httpRequest, BodyHandlers.ofString());
 
@@ -117,7 +113,7 @@ public class MediaWikiClient {
 		System.out.println("Fetching " + url);
 
 		final HttpRequest httpRequest = HttpRequest.newBuilder().uri(URI.create(url))
-				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + BASIC_AUTH).build();
+				.timeout(Duration.ofMillis(10 * 1000)).header("Authorization", "Basic " + Config.OPTIONAL_AUTH).build();
 
 		final HttpResponse<String> response = HttpClientUtils.sendOrRetry(httpRequest, BodyHandlers.ofString());
 
@@ -127,7 +123,7 @@ public class MediaWikiClient {
 			throw new RuntimeException();
 		} else {
 			final String body = response.body();
-			final Document document = Jsoup.parse(body, _BASE_URL);
+			final Document document = Jsoup.parse(body, Config.MEDIAWIKI_URL);
 
 			document.select("ul.mw-allpages-chunk > li > a[href]").forEach(link -> {
 				final String absUrl = link.absUrl("href");
