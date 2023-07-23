@@ -10,6 +10,7 @@ import java.util.Collection;
 import org.markomannia.mw2d.articles.util.ArticleUtils;
 import org.markomannia.mw2d.assets.AssetRecord;
 import org.markomannia.mw2d.client.MediaWikiClient;
+import org.markomannia.mw2d.extensions.youtube.YoutubeRewriter;
 import org.markomannia.mw2d.markdown.util.MarkdownUtils;
 
 import io.github.furstenheim.CopyDown;
@@ -24,7 +25,9 @@ public class ArticleWriter {
 		final String parserOutputMarkdownWithoutHtml = parserOutputMarkdown.replaceAll("<([^>]+)>", "$1");
 
 		final String markdown = "# " + article.fromHeading() + "\n\n" + parserOutputMarkdownWithoutHtml;
-		return MarkdownUtils.rewriteMarkdown(markdown);
+		final String markdownWithYoutube = YoutubeRewriter.rewriteYoutubeLinks(markdown);
+
+		return MarkdownUtils.cleanMarkdown(markdownWithYoutube);
 	}
 
 	public static String determineDirectoryPath(final ArticleRecord article) {
