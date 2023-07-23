@@ -22,11 +22,13 @@ public class ArticleWriter {
 		final String html = article.elements().html();
 		final String parserOutputMarkdown = new CopyDown().convert(html);
 		final String parserOutputMarkdownWithoutHtml = parserOutputMarkdown.replaceAll("<([^>]+)>", "$1");
+		final String parserOutputMarkdownWithFixedUnderline = parserOutputMarkdownWithoutHtml.replace("\\_", "_");
 
-		final String markdown = "# " + article.fromHeading() + "\n\n" + parserOutputMarkdownWithoutHtml;
+		final String markdown = "# " + article.fromHeading() + "\n\n" + parserOutputMarkdownWithFixedUnderline;
 		final String markdownWithYoutube = YoutubeRewriter.rewriteYoutubeLinks(markdown);
+		final String markdownWithFixedAssetLinks = MarkdownUtils.fixRemainingAssetLinks(markdownWithYoutube);
 
-		return MarkdownUtils.cleanMarkdown(markdownWithYoutube);
+		return MarkdownUtils.cleanMarkdown(markdownWithFixedAssetLinks);
 	}
 
 	public static String determineDirectoryPath(final ArticleRecord article) {
