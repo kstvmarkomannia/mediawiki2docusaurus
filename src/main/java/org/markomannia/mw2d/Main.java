@@ -1,6 +1,5 @@
 package org.markomannia.mw2d;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,7 @@ import org.markomannia.mw2d.util.UrlUtils;
 
 public class Main {
 
-	public static void main(final String[] args) throws IOException, InterruptedException {
+	public static void main(final String[] args) throws Exception {
 		final List<MediaWikiCategoryRecord> categories = MediaWikiClient.getCategories();
 		final List<MediaWikiCategoryRecord> categoriesSorted = CategoryUtils.sortCategories(categories);
 
