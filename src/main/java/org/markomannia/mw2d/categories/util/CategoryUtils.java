@@ -12,7 +12,7 @@ public class CategoryUtils {
 
 	public static String cleanCategoryDirectoryName(final String url) {
 		return url.replace("'", "").replace("´", "").replace(",", "").replace("!", "").replace("?", "")
-				.replace("(", "_").replace(")", "_");
+				.replace("(", "_").replace(")", "_").replace(" ", "_").strip();
 	}
 
 	public static List<MediaWikiCategoryRecord> sortCategories(final List<MediaWikiCategoryRecord> categories) {
