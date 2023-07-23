@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 
+import org.markomannia.mw2d.Config;
 import org.markomannia.mw2d.articles.util.ArticleUtils;
 import org.markomannia.mw2d.assets.AssetRecord;
 import org.markomannia.mw2d.client.MediaWikiClient;
@@ -16,8 +17,6 @@ import org.markomannia.mw2d.markdown.util.MarkdownUtils;
 import io.github.furstenheim.CopyDown;
 
 public class ArticleWriter {
-
-	public static final String BASE_PATH = "/Users/uwol/github/kstvmarkomannia/markomannenwiki/docs";
 
 	private static String createMarkdown(final ArticleRecord article) {
 		final String html = article.elements().html();
@@ -31,7 +30,7 @@ public class ArticleWriter {
 	}
 
 	public static String determineDirectoryPath(final ArticleRecord article) {
-		return BASE_PATH + ArticleUtils.determineArticleWithCategoryPath(article);
+		return Config.BASE_PATH + ArticleUtils.determineArticleWithCategoryPath(article);
 	}
 
 	public static Path determineFilePath(final ArticleRecord article) {
