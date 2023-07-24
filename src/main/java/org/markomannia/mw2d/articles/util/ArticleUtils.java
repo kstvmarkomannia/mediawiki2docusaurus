@@ -2,12 +2,12 @@ package org.markomannia.mw2d.articles.util;
 
 import org.markomannia.mw2d.articles.ArticleRecord;
 import org.markomannia.mw2d.categories.util.CategoryUtils;
+import org.markomannia.mw2d.util.UrlUtils;
 
 public class ArticleUtils {
 
-	public static String cleanArticleFileName(final String url) {
-		return url.replace("'", "").replace("´", "").replace(",", "").replace("!", "").replace("?", "")
-				.replace("(", "_").replace(")", "_");
+	public static String cleanArticleFileName(final String fileName) {
+		return UrlUtils.cleanFileName(fileName);
 	}
 
 	public static String determineArticleWithCategoryPath(final ArticleRecord article) {

@@ -11,10 +11,8 @@ import org.markomannia.mw2d.util.UrlUtils;
 
 public class AssetUtils {
 
-	public static String cleanAssetFileName(final String url) {
-		return url.replace("'", "").replace("´", "").replace(",", "").replace("!", "").replace("?", "")
-				.replace("(", "_").replace(")", "_").replace("ü", "ue").replace("ä", "ae").replace("ö", "oe")
-				.replace("Ü", "Ue").replace("Ä", "Ae").replace("Ö", "Oe").replace("ß", "ss").replace("´", "");
+	public static String cleanAssetFileName(final String fileName) {
+		return UrlUtils.cleanFileName(fileName);
 	}
 
 	public static Map<String, AssetRecord> rewriteAssets(final Elements parserOutput) {

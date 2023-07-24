@@ -12,6 +12,22 @@ import java.util.regex.Pattern;
 
 public class UrlUtils {
 
+	public static String cleanFileName(final String fileName) {
+		final String specialCharsRemoved = fileName.replace("'", "").replace("´", "").replace("´", "").replace(",", "")
+				.replace("!", "").replace("?", "");
+
+		final String germanCharsReplaced = specialCharsRemoved.replace("ü", "ue").replace("ä", "ae").replace("ö", "oe")
+				.replace("Ü", "Ue").replace("Ä", "Ae").replace("Ö", "Oe").replace("ß", "ss");
+
+		final String specialCharsReplaced = germanCharsReplaced.replace("(", "_").replace(")", "_").replace(" ", "_");
+
+		final String trailingCharsRemoved = specialCharsReplaced.endsWith("_")
+				? specialCharsReplaced.substring(0, specialCharsReplaced.length())
+				: specialCharsReplaced;
+
+		return trailingCharsRemoved;
+	}
+
 	public static Map<String, String> getQueryMapForQuery(final String query) {
 		final Pattern pat = Pattern.compile("([^&=]+)=([^&]*)");
 		final Matcher matcher = pat.matcher(query);
