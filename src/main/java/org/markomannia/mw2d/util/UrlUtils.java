@@ -19,7 +19,8 @@ public class UrlUtils {
 		final String germanCharsReplaced = specialCharsRemoved.replace("ü", "ue").replace("ä", "ae").replace("ö", "oe")
 				.replace("Ü", "Ue").replace("Ä", "Ae").replace("Ö", "Oe").replace("ß", "ss");
 
-		final String specialCharsReplaced = germanCharsReplaced.replace("(", "_").replace(")", "_").replace(" ", "_");
+		final String specialCharsReplaced = germanCharsReplaced.replace("(", "_").replace(")", "_").replace(" ", "_")
+				.replace("____", "_").replace("___", "_").replace("__", "_");
 
 		final String trailingCharsRemoved = specialCharsReplaced.endsWith("_")
 				? specialCharsReplaced.substring(0, specialCharsReplaced.length() - 1)
