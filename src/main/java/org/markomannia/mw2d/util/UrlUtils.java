@@ -14,7 +14,7 @@ public class UrlUtils {
 
 	public static String cleanFileName(final String fileName) {
 		final String specialCharsRemoved = fileName.replace("'", "").replace("´", "").replace("´", "").replace(",", "")
-				.replace("!", "").replace("?", "").replace("Â", "");
+				.replace("!", "").replace("?", "").replace("Â", "").replace(".", "");
 
 		final String germanCharsReplaced = specialCharsRemoved.replace("ü", "ue").replace("ä", "ae").replace("ö", "oe")
 				.replace("Ü", "Ue").replace("Ä", "Ae").replace("Ö", "Oe").replace("ß", "ss");
